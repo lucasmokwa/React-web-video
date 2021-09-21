@@ -17,18 +17,29 @@ class App extends React.Component {
         q: searchTerm,
       },
     });
-    this.setState({ selectedVideo: null, videos: response.data.items });
+    this.setState({
+      selectedVideo: response.data.items[0],
+      videos: response.data.items,
+    });
   };
 
   render() {
     return (
       <div className='ui container'>
         <SearchBar onSearchSubmit={this.onSearchSubmit} />
-        <VideoDetail video={this.state.selectedVideo} />
-        <VideoList
-          videos={this.state.videos}
-          onVideoSelect={this.onVideoSelect}
-        />
+        <div className='ui grid'>
+          <div className='ui row'>
+            <div className='eleven wide column'>
+              <VideoDetail video={this.state.selectedVideo} />
+            </div>
+            <div className='five wide column'>
+              <VideoList
+                videos={this.state.videos}
+                onVideoSelect={this.onVideoSelect}
+              />
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
